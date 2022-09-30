@@ -1,0 +1,40 @@
+//AGREGAR
+DROP TRIGGER IF EXISTS estudiantes_agregar;
+DELIMITER //
+CREATE TRIGGER estudiantes_agregar 
+BEFORE INSERT on estudiantes
+for each row 
+BEGIN 
+insert into estudiantes_triggers(Apellidos, Nombres, Edad, Genero, Dui_o_carnet_minoridad, Dirección, Institucion_educativa_ingreso, Carrera, Año_academico, Celular, Correo, Observaciones, Año_ingreso, Estado, Cambio)
+values (new.Apellidos, new.Nombres, new.Edad, new.Genero, new.Dui_o_carnet_minoridad, new.Dirección, new.Institucion_educativa_ingreso, new.Carrera, new.Año_academico, new.Celular,
+new.Correo, new.Observaciones, new.Año_ingreso, new.Estado, 'AGREGADO');
+END //
+DELIMITER ;
+
+//EDITAR
+DROP TRIGGER IF EXISTS estudiantes_editar;
+DELIMITER //
+CREATE TRIGGER estudiantes_editar
+BEFORE UPDATE
+on estudiantes
+for each row
+BEGIN
+insert into estudiantes_triggers(Apellidos, Nombres, Edad, Genero, Dui_o_carnet_minoridad, Dirección, Institucion_educativa_ingreso, Carrera, Año_academico, Celular, Correo, Observaciones, Año_ingreso, Estado, Cambio)
+values (old.Apellidos, old.Nombres, old.Edad, old.Genero, old.Dui_o_carnet_minoridad, old.Dirección, old.Institucion_educativa_ingreso, old.Carrera, old.Año_academico, old.Celular,
+old.Correo, old.Observaciones, old.Año_ingreso, old.Estado, 'EDITADO');
+END //
+DELIMITER ;
+
+//ELIMINAR
+DROP TRIGGER IF EXISTS estudiantes_eliminar;
+DELIMITER //
+CREATE TRIGGER estudiantes_eliminar
+BEFORE DELETE
+on estudiantes
+for each row
+BEGIN
+INSERT INTO estudiantes_triggers(Apellidos, Nombres, Edad, Genero, Dui_o_carnet_minoridad, Dirección, Institucion_educativa_ingreso, Carrera, Año_academico, Celular, Correo, Observaciones, Año_ingreso, Estado, Cambio)
+values (old.Apellidos, old.Nombres, old.Edad, old.Genero, old.Dui_o_carnet_minoridad, old.Dirección, old.Institucion_educativa_ingreso, old.Carrera, old.Año_academico, old.Celular,
+old.Correo, old.Observaciones, old.Año_ingreso, old.Estado, 'ELIMINADO');
+END //
+DELIMITER ;
